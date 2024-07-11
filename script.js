@@ -50,7 +50,7 @@ const criarItemDeAtividade = (atividade) => {
     <div>
       ${input}
       <span>${atividade.nome}</span>
-      <time>${formatar.dia.semana.longo}, dia ${formatar.dia.numerico} de ${formatar.mes}, às ${formatar.hora}</time>
+      <time>${formatar.dia.semana.longo}, dia ${formatar.dia.numerico} de ${formatar.mes}, às ${formatar.hora}h</time>
     </div>
   `;
 };
@@ -62,7 +62,7 @@ const atualizarListaDeAtividades = () => {
   if (atividades.length == 0) {
     section.innerHTML = `<p>Nenhuma atividade cadastrada.</p>`;
     return;
-  } 
+  }
 
   // Limpar o conteúdo da section antes de adicionar os novos elementos
   section.innerHTML = '';
@@ -73,3 +73,45 @@ const atualizarListaDeAtividades = () => {
 };
 
 atualizarListaDeAtividades();
+
+const salvarAtividade = (event) => {
+  event.preventDefault();
+};
+
+const criarDiasSelecao = () => {
+  const dias = [
+    "2024-02-28",
+    "2024-02-29",
+    "2024-03-01",
+    "2024-03-02",
+    "2024-03-03"
+  ];
+
+  let diasSelecao = '';
+
+  for (let dia of dias) {
+    const formatar = formatador(new Date(dia));
+    const diaFormatado = `${formatar.dia.numerico} de ${formatar.mes}`;
+
+    diasSelecao += `
+      <option value="${dia}">${diaFormatado}</option>
+    `;
+  }
+
+  document.querySelector('select[name="dia"]').innerHTML = diasSelecao;
+};
+
+criarDiasSelecao();
+
+const criarHoraSelecao = () => {
+  let horasDisponiveis = '';
+
+  for (let i = 6; i < 23; i++) {
+    horasDisponiveis += `<option value="${i}:00">${i}:00</option>`
+    horasDisponiveis += `<option value="${i}:30">${i}:30</option>`;
+  }
+
+  document.querySelector('select[name="hora"]').innerHTML = horasDisponiveis;
+};
+
+criarHoraSelecao();
